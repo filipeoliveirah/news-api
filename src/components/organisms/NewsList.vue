@@ -1,5 +1,5 @@
 <template>
-  <div v-if="newsStatus === 'ok'" class="container flex justify-center my-12">
+  <div v-if="newsStatus === 'ok'" class="container my-12">
     <div class="grid grid-cols-3 gap-4 items-start justify-center">
       <template v-for="news in newsList" :key="news">
         <NewsCard
@@ -9,15 +9,20 @@
         />
       </template>
     </div>
+    <div class="mt-12">
+      <PaginationDefault />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
   import { computed } from 'vue';
-import NewsCard from '../molecules/NewsCard.vue'
+  import NewsCard from '../molecules/NewsCard.vue'
+  import PaginationDefault from '../atoms/PaginationDefault.vue'
   import { useStore } from 'vuex';
 
   const storeNews = useStore()
+
   const queryParams = {
     q: 'tesla',
     language: 'pt',
@@ -27,6 +32,7 @@ import NewsCard from '../molecules/NewsCard.vue'
     page: 1,
   }
   storeNews.dispatch('fetchNews', queryParams)
+
   const newsList = computed(() => storeNews.getters.getterNews.articles)
   const newsStatus = computed(() => storeNews.getters.getterNews.status)
 </script>
