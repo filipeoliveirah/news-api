@@ -37,8 +37,18 @@ export default createStore({
     getterNews: state => state.news
   },
   actions: {
-    async fetchNews({ commit }){
-      const response = await fetch(endpoint + '?q=tesla&from=2023-07-04&sortBy=publishedAt&apiKey=' + apiKey)
+    async fetchNews({ commit }, {q = 'tesla', language = 'pt', from = '2023-07-04', sortBy = 'publishedAt', pageSize = 6, page = 1}){
+      const response = await fetch(
+        endpoint + 
+        `?q=${q}` +
+        `&language=${language}` + 
+        `&from=${from}` + 
+        `&sortBy=${sortBy}` +
+        `&pageSize=${pageSize}` +
+        `&page=${page}` +
+        `&apiKey=` +
+        apiKey
+      )
       const newsResp = await response.json()
       commit('SET_NEWS', newsResp)
     }
