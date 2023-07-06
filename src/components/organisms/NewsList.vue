@@ -1,6 +1,6 @@
 <template>
   <div v-if="newsStatus === 'ok'" class="container max-w-6xl ml-auto mr-auto">
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 px-4">
       <template v-for="news in newsList" :key="news">
         <div class="flex items-start justify-center">
           <NewsCard
