@@ -5,6 +5,17 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
   import NewsList from '@/components/organisms/NewsList.vue'
+
+  import { onBeforeMount, defineComponent} from 'vue'
+
+  export default defineComponent({
+    components: { NewsList },
+    setup() {
+      onBeforeMount(() => {
+        document.title = 'Live News';
+      })
+    }
+  })
 </script>
