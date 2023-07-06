@@ -1,13 +1,12 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link>
-  </nav>
-  <router-view/>
+  <div class="bg-slate-900 bg-light bg-cover bg-right bg-no-repeat min-h-fit">
+    <router-view/>
+  </div>
 </template>
 
-<script setup lang="ts">
-  import { useStore } from 'vuex';
 
-  const store = useStore()
-  store.dispatch('fetchNews')
-</script>
+<style lang="scss" scoped>
+.bg-light {
+  background-image: url(../src/assets/img/bg-light.png);
+}
+</style>
