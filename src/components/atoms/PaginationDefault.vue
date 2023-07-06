@@ -46,21 +46,28 @@
   </nav>
 </template>
 
-<script setup lang="ts">
-  import { defineProps,  defineEmits } from 'vue';
-  const emit = defineEmits(['emitCurrentPage'])
-  const props = defineProps({
-    total: {
-      type: Number,
-      default: 1,
-    },
-    active: {
-      type: Number,
-      default: 1,
-    },
-  })
+<script lang="ts">
+  import { defineComponent } from 'vue';
 
-  function onChangePage(page: number) {
-    emit('emitCurrentPage', page)
-  }
+  export default defineComponent({
+    name: 'PaginationDefault',
+    props:{
+      total: {
+        type: Number,
+        default: 1,
+      },
+      active: {
+        type: Number,
+        default: 1,
+      },
+    },
+    setup(_, { emit }) {
+      function onChangePage(page: number) {
+        emit('emitCurrentPage', page)
+      }
+      return {
+        onChangePage
+      }
+    }
+  })
 </script>
