@@ -1,38 +1,52 @@
 <template>
-  <div v-if="newsStatus === 'ok'" class="container my-12">
-    <div class="grid grid-cols-3 gap-4 items-start justify-center">
+  <div v-if="newsStatus === 'ok'" class="container max-w-6xl ml-auto mr-auto">
+    <div class="grid grid-cols-3 gap-4">
       <template v-for="news in newsList" :key="news">
-        <NewsCard
-          :title="news.title"
-          :description="news.description"
-          :image="news.urlToImage"
-        />
+        <div class="flex items-start justify-center">
+          <NewsCard
+            :title="news.title"
+            :description="news.description"
+            :image="news.urlToImage"
+          />
+        </div>
       </template>
     </div>
     <div class="mt-12">
-      <PaginationDefault />
+      <PaginationDefault
+        :total="totalPages"
+        :active="state.page"
+        @emitCurrentPage="onEmitChangePage($event)"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, reactive } from 'vue';
   import NewsCard from '../molecules/NewsCard.vue'
   import PaginationDefault from '../atoms/PaginationDefault.vue'
   import { useStore } from 'vuex';
 
   const storeNews = useStore()
 
-  const queryParams = {
+  const state = reactive({
     q: 'tesla',
     language: 'pt',
     from: '2023-07-04',
     sortBy: 'publishedAt',
     pageSize: 6,
     page: 1,
-  }
-  storeNews.dispatch('fetchNews', queryParams)
+  })
+
+  storeNews.dispatch('fetchNews', {...state})
 
   const newsList = computed(() => storeNews.getters.getterNews.articles)
   const newsStatus = computed(() => storeNews.getters.getterNews.status)
+  const newstotal = computed(() => storeNews.getters.getterNews.totalResults)
+  const totalPages = computed(() => state.pageSize & newstotal.value)
+
+  function onEmitChangePage(event: number) {
+    state.page = event
+    storeNews.dispatch('fetchNews', {...state})
+  }
 </script>
