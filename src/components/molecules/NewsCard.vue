@@ -1,16 +1,16 @@
 <template>
-  <div class="max-w-sm bg-gray-800 border border-gray-200 rounded-lg shadow">
+  <div class="max-w-sm bg-slate-700 border border-gray-700 rounded-lg shadow">
     <a href="#">
       <img class="rounded-t-lg object-cover max-h-40 w-full" :src="image" :alt="title" />
     </a>
     <div class="p-5">
       <a href="#">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {{ title.toString().substring(0, 55) }} ...
+          {{ formatedTitle }}
         </h5>
       </a>
       <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-        {{ description.toString().substring(0, 80)}} [...]
+        {{ description.toString().substring(0, 70)}} [...]
       </p>
       <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Leia mais
@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'NewsCard',
@@ -40,6 +40,17 @@ export default defineComponent({
       type: String,
       default: 'https://placehold.co/600x400',
     }
-  },
+  },  
+  setup(props) {
+    const formatedTitle = computed(() => {
+      return props.title.length > 38 ? 
+      `${props.title.toString().substring(0, 38)} ...` :
+      props.title
+    })
+
+    return {
+      formatedTitle,
+    }
+  }  
 });
 </script>
