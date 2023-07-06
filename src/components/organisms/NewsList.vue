@@ -43,7 +43,7 @@
   const newsList = computed(() => storeNews.getters.getterNews.articles)
   const newsStatus = computed(() => storeNews.getters.getterNews.status)
   const newstotal = computed(() => storeNews.getters.getterNews.totalResults)
-  const totalPages = computed(() => state.pageSize & newstotal.value)
+  const totalPages = computed(() => Math.ceil(newstotal.value % state.pageSize))
 
   function onEmitChangePage(event: number) {
     state.page = event
