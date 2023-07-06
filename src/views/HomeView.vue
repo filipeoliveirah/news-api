@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <img alt="Live News" class="w-32 ml-auto mr-auto my-4" src="../assets/svg/live-news.svg">
+  <div class="container py-6 mr-auto ml-auto">
+    <img alt="Live News" class="w-32 ml-auto mr-auto py-6" src="../assets/svg/live-news.svg">
     <NewsList/>
   </div>
 </template>
